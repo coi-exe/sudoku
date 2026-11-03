@@ -1,9 +1,12 @@
 @import "tailwindcss";
 
+/* Dark mode base styles */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* Sudoku Cell Styles */
 .sudoku-cell {
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12,15 +15,25 @@
   transition: all 0.1s ease;
   position: relative;
   user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
-@media (max-width: 480px) {
+/* Tablet */
+@media (min-width: 640px) {
   .sudoku-cell {
-    width: 36px;
-    height: 36px;
+    width: 46px;
+    height: 46px;
+  }
+}
+
+/* Mobile small */
+@media (max-width: 380px) {
+  .sudoku-cell {
+    width: 34px;
+    height: 34px;
   }
   .sudoku-cell span {
-    font-size: 14px !important;
+    font-size: 13px !important;
   }
 }
 
@@ -28,17 +41,34 @@
   background-color: #eef2ff;
 }
 
+.dark .sudoku-cell:hover {
+  background-color: rgba(99, 102, 241, 0.15);
+}
+
 .sudoku-cell.selected {
   background-color: #c7d2fe !important;
   box-shadow: inset 0 0 0 2px #6366f1;
+}
+
+.dark .sudoku-cell.selected {
+  background-color: rgba(99, 102, 241, 0.3) !important;
+  box-shadow: inset 0 0 0 2px #818cf8;
 }
 
 .sudoku-cell.highlighted {
   background-color: #eef2ff;
 }
 
+.dark .sudoku-cell.highlighted {
+  background-color: rgba(99, 102, 241, 0.1);
+}
+
 .sudoku-cell.same-number {
   background-color: #e0e7ff !important;
+}
+
+.dark .sudoku-cell.same-number {
+  background-color: rgba(99, 102, 241, 0.2) !important;
 }
 
 .sudoku-cell.given span {
@@ -46,24 +76,53 @@
   font-weight: 700;
 }
 
+.dark .sudoku-cell.given span {
+  color: #e0e7ff;
+}
+
 .sudoku-cell:not(.given) span {
   color: #4338ca;
+}
+
+.dark .sudoku-cell:not(.given) span {
+  color: #a5b4fc;
 }
 
 .sudoku-cell.error {
   background-color: #fee2e2 !important;
 }
 
+.dark .sudoku-cell.error {
+  background-color: rgba(239, 68, 68, 0.2) !important;
+}
+
 .sudoku-cell.error span {
   color: #dc2626 !important;
+}
+
+.dark .sudoku-cell.error span {
+  color: #fca5a5 !important;
 }
 
 .sudoku-cell.border-left-thick {
   border-left: 2px solid #312e81;
 }
 
+.dark .sudoku-cell.border-left-thick {
+  border-left-color: #818cf8;
+}
+
 .sudoku-cell.border-top-thick {
   border-top: 2px solid #312e81;
+}
+
+.dark .sudoku-cell.border-top-thick {
+  border-top-color: #818cf8;
+}
+
+/* Dark mode cell borders */
+.dark .sudoku-cell {
+  border-color: #374151;
 }
 
 /* Win animation */
@@ -83,4 +142,65 @@
 
 .animate-bounce-in {
   animation: bounce-in 0.5s ease-out;
+}
+
+/* Slow bounce for hero */
+@keyframes bounce-slow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 3s ease-in-out infinite;
+}
+
+/* Smooth transitions for theme switching */
+body,
+.bg-white,
+.bg-gray-50,
+.bg-gray-100,
+.text-gray-900,
+.text-gray-700,
+.text-gray-600,
+.text-gray-400,
+.border-gray-200,
+.border-gray-300 {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Prevent zoom on iOS inputs */
+@supports (-webkit-touch-callout: none) {
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Safe area for notched devices */
+@supports (padding: max(0px)) {
+  .safe-bottom {
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
+  }
+}
+
+/* Scrollbar styling for dark mode */
+.dark ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #1f2937;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #4b5563;
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
 }
